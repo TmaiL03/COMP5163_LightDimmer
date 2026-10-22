@@ -19,9 +19,11 @@ void setup() {
 }
 void loop() {
 
-  // Read button input
+  // Read button and resistor inputs.
   int iButton = digitalRead(D5);
-  digitalWrite(D4, iButton);
+  int resistorVal = analogRead(A0);
+
+  digitalWrite(D4, resistorVal);
 
   // Update program button state when button is initially pressed.
   if(buttonState == LOW && iButton == HIGH) {
@@ -29,8 +31,6 @@ void loop() {
   }
 
   if(isOn) {
-    int resistorVal = analogRead(A0);
-
     // Rotating resistor will affect LED brightness.
     analogWrite(D4, resistorVal);
   }
@@ -38,5 +38,7 @@ void loop() {
   // Update buttonState.
   buttonState = iButton;
 
-  delay(1);
+  // Adding small delay to address noise in current spikes (caused LED to sporadically
+  // illuminate when moving the variable resistor while button was in an OFF state.)
+  delay(50);
 }
