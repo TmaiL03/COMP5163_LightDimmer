@@ -1,3 +1,9 @@
+// Student Name: Liam Tingley
+// Student Number: 100161568
+// Assignment: COMP-5163 - Light Dimmer
+// Version: V1.0
+// Date: October 21st, 2026
+
 #include <Arduino.h>
 
 bool isOn = false;
@@ -17,13 +23,12 @@ void setup() {
  analogWriteRange(1023);
 
 }
+
 void loop() {
 
   // Read button and resistor inputs.
   int iButton = digitalRead(D5);
   int resistorVal = analogRead(A0);
-
-  digitalWrite(D4, resistorVal);
 
   // Update program button state when button is initially pressed.
   if(buttonState == LOW && iButton == HIGH) {
@@ -33,6 +38,9 @@ void loop() {
   if(isOn) {
     // Rotating resistor will affect LED brightness.
     analogWrite(D4, resistorVal);
+  } else {
+    // Keeps LED off at all times while button is in OFF state.
+    digitalWrite(D4, HIGH);
   }
 
   // Update buttonState.
